@@ -29,44 +29,51 @@ public class EstaticasDeTamañoVariable extends Estrategias {
     }
 
     public int Posicion(Object[][] tabla, String Tamaño) {
-        int Posicion = -1;
-        if (Posicion == 7) {
-            Posicion = -1;
-        }
+
         BigInteger TamañoPermitido = herramientas.calculate((String) tabla[0][3]);
         BigInteger tamaño = new BigInteger(Tamaño);
 
         switch (Forma) {
+            //primer ajuste
             case "PRA":
+                int Posicion = -1;
+                if (Posicion == 7) {
+                    Posicion = -1;
+                }
                 if (entra(TamañoPermitido, tamaño)) {
                     Posicion++;
                     return Posicion;
                 }
                 break;
+            //mejor ajuste
             case "MA":
-                int min = 0 ;
-                int temp ;
-                for (int j = 0; j < 4; j++) {
-                    Object element = tabla[j][3];
-                    if (entra(herramientas.calculate((String)tabla[j][3]),tamaño)){
-                        if(herramientas.calculate((String)tabla[min][3]).compareTo(herramientas.calculate((String)tabla[j][3]))==1){
-                            min=j;
-                        }
-                    }
-                }
-                break;
+                int min = 0;
+                for (int j = 0; j < tabla.length; j++) {
+                    if (tabla[j][1] == null) {
 
-            case "PA": 
-                int max = 0 ;
-                for (int j = 0; j < 4; j++) {
-                    Object element = tabla[j][3];
-                    if (entra(herramientas.calculate((String)tabla[j][3]),tamaño)){
-                        if(herramientas.calculate((String)tabla[max][3]).compareTo(herramientas.calculate((String)tabla[j][3]))==-1){
-                            max=j;
+                        if (entra(herramientas.calculate((String) tabla[j][3]), tamaño)) {
+                            if (herramientas.calculate((String) tabla[min][3]).compareTo(herramientas.calculate((String) tabla[j][3])) == 1) {
+                                min = j;
+                            }
                         }
                     }
                 }
-                break;
+
+                return min;
+            //peor ajuste
+            case "PA":
+                int max = 6;
+                for (int j = 0; j < tabla.length; j++) {
+                    if (tabla[j][1] == null) {
+
+                        if (entra(herramientas.calculate((String) tabla[j][3]), tamaño)) {
+                            if (herramientas.calculate((String) tabla[max][3]).compareTo(herramientas.calculate((String) tabla[j][3])) == -1) {
+                                max = j;
+                            }
+                        }
+                    }
+                }
+                return max;
 
         }
 
@@ -77,11 +84,11 @@ public class EstaticasDeTamañoVariable extends Estrategias {
 
         switch (tamaño.compareTo(tamañoPermitido)) {
             case -1:
-                return false;
+                return true;
             case 0:
                 return true;
             case 1:
-                return true;
+                return false;
 
         }
         return false;

@@ -23,7 +23,15 @@ public class DinamicasConCompactacion extends Estrategias {
 
     @Override
     public int Posicion(Object[][] tabla, String Tamaño) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int posicion=0;
+        for (int i = 0 ;i<tabla.length;i++){
+            if (tabla[i][1]==null){
+                return i;
+            }else{
+                posicion++;
+            }
+        }
+        return posicion;
     }
     
 }

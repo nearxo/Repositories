@@ -6,6 +6,9 @@ package sistemas.operativos;
 
 import java.util.ArrayList;
 import java.math.BigInteger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -18,15 +21,22 @@ public class Magia extends javax.swing.JFrame {
      */
     Estrategias modelo;
     Object[][] tabla;
+    ArrayList<ArrayList<Integer>> array = new ArrayList<ArrayList<Integer>>();
+
     Utils herramientas = new Utils();
+    int ultimafila;
+
     public Magia(String estrategia) {
         Estrategia(estrategia);
         initComponents();
 
         if (estrategia.contains("Dinamicas")) {
+            ultimafila = 2;
             jTable1.setModel(new javax.swing.table.DefaultTableModel(
                     tabla = new Object[][]{
-                        {"0x00000000", null, null}
+                        {null, null, null},
+                        {null, null, null},
+                        {null, null, null}
                     },
                     new String[]{
                         "Referencia", "Nombre Proceso", "Espacio"
@@ -34,43 +44,48 @@ public class Magia extends javax.swing.JFrame {
             ));
         }
         if (estrategia.contains("Estaticas De Tamaño Variable")) {
+            ultimafila = 3;
             jTable1.setModel(new javax.swing.table.DefaultTableModel(
                     tabla = new Object[][]{
-                        {"000000000", null, null, "1gb"},
-                        {null, null, null, "1gb"},
-                        {null, null, null, "512mb"},
-                        {null, null, null, "512mb"},
-                        {null, null, null, "256mb"},
-                        {null, null, null, "256mb"},
-                        {null, null, null, "256mb"},
-                        {null, null, null, "256mb"}
+                        {"000000000", null, null, "256 mb"},
+                        {null, null, null, "256 mb"},
+                        {null, null, null, "512 mb"},
+                        {null, null, null, "512 mb"},
+                        {null, null, null, "1 gb"},
+                        {null, null, null, "1 gb"},
+                        {null, null, null, "256 mb"},
+                        {null, null, null, "256 mb"}
                     },
                     new String[]{
                         "Referencia", "Nombre Proceso", "Espacio", "Particion"
                     }
             ));
+            Posicionar();
+
         }
         if (estrategia.contains("Particiones Estaticas de Tamaño fijo")) {
+            ultimafila = 3;
             jTable1.setModel(new javax.swing.table.DefaultTableModel(
                     tabla = new Object[][]{
-                        {Long.toHexString(429496729), null, null, "400mb"},
-                        {Long.toHexString(858993458), null, null, "400mb"},
-                        {Long.toHexString(1288490187), null, null, "400mb"},
-                        {Long.toHexString(1717986916), null, null, "400mb"},
-                        {Long.toHexString(2147483645), null, null, "400mb"},
-                        {herramientas.decimalToHex("2576980374"), null, null, "400mb"},
-                        {herramientas.decimalToHex("3006477103"), null, null, "400mb"},
-                        {herramientas.decimalToHex("3435973832"), null, null, "400mb"},
-                        {herramientas.decimalToHex("3865470561"), null, null, "400mb"},
-                        {herramientas.decimalToHex("4294967290"), null, null, "400mb"}
+                        {null, null, null, "400 mb"},
+                        {null, null, null, "400 mb"},
+                        {null, null, null, "400 mb"},
+                        {null, null, null, "400 mb"},
+                        {null, null, null, "400 mb"},
+                        {null, null, null, "400 mb"},
+                        {null, null, null, "400 mb"},
+                        {null, null, null, "400 mb"},
+                        {null, null, null, "400 mb"},
+                        {null, null, null, "400 mb"}
                     //0x00000000
                     },
                     new String[]{
                         "Referencia", "Nombre Proceso", "Espacio", "Particion"
                     }
             ));
-        }
 
+            Posicionar();
+        }
     }
 
     /**
@@ -173,36 +188,108 @@ public class Magia extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+    BigInteger acumulado = new BigInteger("0");
+    private void Posicionar() {
+        
+        BigInteger temp = new BigInteger("0");
+
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            // si la primera casilla es nula y la ultima diferente de null
+            
+            if (jTable1.getValueAt(i, 0) == null && jTable1.getValueAt(i, ultimafila) != null) {
+                
+                
+                temp = herramientas.calculate((String) jTable1.getValueAt(i, ultimafila));
+                if (temp != null) {
+                    acumulado = acumulado.add(temp);
+                }
+                jTable1.setValueAt(acumulado, i, 0);
+            }
+            //si la primera casilla no es nula o la ultima es null
+            else {
+                //si la primera casilla es nula 
+                if (jTable1.getValueAt(i, 0) == null) {
+                    try{
+                        temp = new BigInteger(jTable1.getValueAt(i, 0).toString(), 16);
+                    }catch(Exception e){
+                        
+                    }
+                }
+                acumulado.add(herramientas.HexTodecimal(temp.toString()));
+            }
+
+        }
+    }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        String nombre = jTextField1.getText();
-        String tamaño = jTextField2.getText();
+        // Si no me he pasado
+        if(acumulado.compareTo(herramientas.calculate("4 gb"))==-1){
+            
 
-        // Obtener el índice de la primera fila seleccionada en la tabla
-        //int filaSeleccionada = jTable1.getSelectedRow();
-        int filaSeleccionada=modelo.Posicion(tabla,tamaño);
-        //int filaSeleccionada = 1;
-        
+            String nombre = jTextField1.getText();
+            String tamaño = jTextField2.getText();
+            BigInteger tamañoR = herramientas.calculate(tamaño);
+            tamaño = tamañoR.toString();
+            Boolean Agregar = true;
+            int Borrar = 0;
+            // recuperar la tabla y saber si voy a borrar o no
+            for (int i = 0; i < jTable1.getRowCount(); i++) {
+                for (int j = 0; j < jTable1.getColumnCount(); j++) {
+                    tabla[i][j] = jTable1.getValueAt(i, j);
+                    if (jTable1.getValueAt(i, j) != null) {
+                        if (jTable1.getValueAt(i, j).toString().contains(nombre)) {
 
-        // Establecer el nuevo dato en la segunda columna de la fila seleccionada
-        jTable1.setValueAt(nombre, filaSeleccionada, 1);
-        jTable1.setValueAt(tamaño, filaSeleccionada, 2);
-        System.out.println(tabla[2][3]);
-        // Limpiar el JTextField para el siguiente dato
-        jTextField1.setText("");
+                            Agregar = false;
+                            Borrar = i;
+                        }
+                    }
+                }
+            }
+            //agregar proceso
+            if (Agregar) {
 
+                int filaSeleccionada = modelo.Posicion(tabla, tamaño);
+
+                if (filaSeleccionada < tabla.length) {
+                    jTable1.setValueAt(nombre, filaSeleccionada, 1);
+                    jTable1.setValueAt(tamaño, filaSeleccionada, 2);
+
+                } else {
+                    DefaultTableModel modeloAcambiar = (DefaultTableModel) jTable1.getModel();
+                    modeloAcambiar.addRow(new Object[]{null, null, null, null});
+
+                    Object[][] tabla2 = new Object[tabla.length + 1][tabla[1].length];
+                    for (int i = 0; i < tabla.length; i++) {
+                        for (int j = 0; j < tabla[i].length; j++) {
+                            tabla2[i][j] = tabla[i][j];
+                        }
+                    }
+                    tabla = tabla2;
+                    jTable1.setModel(modeloAcambiar);
+                    jTable1.setValueAt(nombre, filaSeleccionada, 1);
+                    jTable1.setValueAt(tamaño, filaSeleccionada, 2);
+
+                }
+
+            }//eliminar proceso
+            else {
+                jTable1.setValueAt(null, Borrar, 1);
+                jTable1.setValueAt(null, Borrar, 2);
+            }
+            Posicionar();
+        }else{
+            JOptionPane.showMessageDialog(null, "NO SE PUEDE AGREGAR MAS ", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
-
 
     private void Estrategia(String Estrategia) {
         switch (Estrategia) {
             case "Particiones Dinamicas Con Compactacion":
-                
+
                 this.modelo = new DinamicasConCompactacion();
                 break;
             case "Particiones Dinamicas Sin Compactacion con peor ajuste":
-    
+
                 this.modelo = new DinamicasSinCompactacion("PA");
                 break;
             case "Particiones dinamicas sin conmpactacion con primer ajuste":
@@ -261,7 +348,7 @@ public class Magia extends javax.swing.JFrame {
 
     }
 
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
