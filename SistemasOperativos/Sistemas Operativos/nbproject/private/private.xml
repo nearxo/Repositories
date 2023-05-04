@@ -2,6 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/Repositories/SistemasOperativos/Sistemas%20Operativos/src/sistemas/operativos/DinamicasConCompactacion.java</file>
+            <file>file:/D:/Repositories/SistemasOperativos/Sistemas%20Operativos/src/sistemas/operativos/Estrategias.java</file>
+            <file>file:/D:/Repositories/SistemasOperativos/Sistemas%20Operativos/src/sistemas/operativos/Utils.java</file>
+            <file>file:/D:/Repositories/SistemasOperativos/Sistemas%20Operativos/src/sistemas/operativos/Inicio.java</file>
+            <file>file:/D:/Repositories/SistemasOperativos/Sistemas%20Operativos/src/sistemas/operativos/Magia.java</file>
+            <file>file:/D:/Repositories/SistemasOperativos/Sistemas%20Operativos/src/sistemas/operativos/EstaticasDeTamañoVariable.java</file>
+            <file>file:/D:/Repositories/SistemasOperativos/Sistemas%20Operativos/src/sistemas/operativos/DinamicasSinCompactacion.java</file>
+            <file>file:/D:/Repositories/SistemasOperativos/Sistemas%20Operativos/src/sistemas/operativos/EstaticasDeTamañofijo.java</file>
+        </group>
     </open-files>
 </project-private>
