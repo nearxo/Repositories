@@ -18,15 +18,6 @@ public class EstaticasDeTamañoVariable extends Estrategias {
         Forma = pa;
     }
 
-    @Override
-    public int posicionProceso(String Estrategia) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public String[] linea(String Nombre, String Tamaño) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     public int Posicion(Object[][] tabla, String Tamaño) {
 
@@ -40,7 +31,7 @@ public class EstaticasDeTamañoVariable extends Estrategias {
                 if (Posicion == 7) {
                     Posicion = -1;
                 }
-                if (entra(TamañoPermitido, tamaño)) {
+                if (herramientas.entra(TamañoPermitido, tamaño)) {
                     Posicion++;
                     return Posicion;
                 }
@@ -51,7 +42,7 @@ public class EstaticasDeTamañoVariable extends Estrategias {
                 for (int j = 0; j < tabla.length; j++) {
                     if (tabla[j][1] == null) {
 
-                        if (entra(herramientas.calculate((String) tabla[j][3]), tamaño)) {
+                        if (herramientas.entra(herramientas.calculate((String) tabla[j][3]), tamaño)) {
                             if (herramientas.calculate((String) tabla[min][3]).compareTo(herramientas.calculate((String) tabla[j][3])) == 1) {
                                 min = j;
                             }
@@ -66,7 +57,7 @@ public class EstaticasDeTamañoVariable extends Estrategias {
                 for (int j = 0; j < tabla.length; j++) {
                     if (tabla[j][1] == null) {
 
-                        if (entra(herramientas.calculate((String) tabla[j][3]), tamaño)) {
+                        if (herramientas.entra(herramientas.calculate((String) tabla[j][3]), tamaño)) {
                             if (herramientas.calculate((String) tabla[max][3]).compareTo(herramientas.calculate((String) tabla[j][3])) == -1) {
                                 max = j;
                             }
@@ -80,18 +71,6 @@ public class EstaticasDeTamañoVariable extends Estrategias {
         return 0;
     }
 
-    private boolean entra(BigInteger tamañoPermitido, BigInteger tamaño) {
-
-        switch (tamaño.compareTo(tamañoPermitido)) {
-            case -1:
-                return true;
-            case 0:
-                return true;
-            case 1:
-                return false;
-
-        }
-        return false;
-    }
+  
 
 }

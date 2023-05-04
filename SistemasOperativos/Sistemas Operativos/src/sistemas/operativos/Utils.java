@@ -48,5 +48,18 @@ public class Utils {
         BigInteger decimal = new BigInteger(Hex.toString(10));  // convierte el número hexadecimal en decimal
         return decimal;
     }
+    
+    public boolean entra(BigInteger tamañoPermitido, BigInteger tamaño) {
 
+        switch (tamaño.compareTo(tamañoPermitido)) {
+            case -1:
+                return true;
+            case 0:
+                return true;
+            case 1:
+                return false;
+
+        }
+        return false;
+    }
 }

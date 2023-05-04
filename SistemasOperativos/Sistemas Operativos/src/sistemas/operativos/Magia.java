@@ -237,7 +237,7 @@ public class Magia extends javax.swing.JFrame {
                 for (int j = 0; j < jTable1.getColumnCount(); j++) {
                     tabla[i][j] = jTable1.getValueAt(i, j);
                     if (jTable1.getValueAt(i, j) != null) {
-                        if (jTable1.getValueAt(i, j).toString().contains(nombre)) {
+                        if (jTable1.getValueAt(i, j).toString().equalsIgnoreCase(nombre)) {
 
                             Agregar = false;
                             Borrar = i;

@@ -13,15 +13,6 @@ public class EstaticasDeTamañofijo extends Estrategias {
     public EstaticasDeTamañofijo() {
     }
 
-    @Override
-    public int posicionProceso(String Estrategia) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public String[] linea(String Nombre, String Tamaño) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     @Override
     public int Posicion(Object[][] tabla,String tamaño) {
